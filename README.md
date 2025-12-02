@@ -51,5 +51,6 @@ pip install -r requirements.txt
 ## Quick Start
 
 ## Model Architecture
+To detect whether the substrate has been successfully placed into the transporter, we propose a fused computer vision model approach. The first model uses the segmented geometry of the substrate compared to the target slot of the transporter to determine larger macro-scale errors in placement. The second model uses a deep learning convolutional neural network to determine smaller micro-scale errors in placement. The fused model approach enables robust and high-accuracy failure detection of transparent substrate placements. 
 
 ## Results
