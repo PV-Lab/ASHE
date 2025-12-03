@@ -59,7 +59,3 @@ To detect whether the substrate has been successfully placed into the transporte
 ## Results
 
 By fusing the geometric and deep learning model approaches, reliable detection of transparent substrate placement failures is achieved across a sweep of realistic error modes. The GM is used as the initial rejection model for large, obvious errors, while the CNN is used to determine small errors nearly imperceptible to the human eye. However, a successful placement is not confirmed unless the GM and CNN both output a success. 
-
-Combining the robotic arm manipulation, dual-actuated substrate dispenser, and the fused GM-CNN vision detection model, we experimentally validate the performance of the complete closed-loop ASHE pipeline. In these experiments, each trial is independent, moving the SDL transporter to the target limit switch to activate the robotic arm path plan and substrate dispenser. Due to the high accuracy and repeatability of the complete ASHE system, failures were manually perscribed to demonstrate the system's closed-loop error detection and correction capabilities. Across 130 experiments of standard operations, only 2 substrates were misplaced and the vision system detected these failures, correcting them in the following attempt, achieving an overall placement success rate of 98.5%. 
-
-![./experiments_R1.png](./experiments_R1.png)
