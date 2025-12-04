@@ -131,45 +131,53 @@ def predict(pipeline, crop_window, overlap_threshold, slant_threshold):
     return (overlap > overlap_threshold and slant > slant_threshold) or (len(alum_sampling) < 50 or len(glass_sampling) < 50)
 
 
-def predict_single_static(aluminum, glass, crop_window, overlap_threhold, slant_threshold):
-    alum_rect = alum_find_corners(img_alum, INTERNAL_CROP_RECT_TOP, save_prefix="doc_alum")
-    glass_rect = glass_find_corners(img_glass, INTERNAL_CROP_RECT_TOP, save_prefix="doc_glass")
+def predict_single_static(img_alum, img_glass, crop_window, overlap_threhold, slant_threshold):
+    alum_rect = alum.find_corners(img_alum, crop_window, save_prefix="doc_alum")
+    glass_rect = glass.find_corners(img_glass, crop_window, save_prefix="doc_glass")
     overlap, slant = compare_rectangles(alum_rect, glass_rect), slant_diff(alum_rect, glass_rect)
     return overlap < overlap_threhold and slant < slant_threshold
 
 if __name__ == "__main__":
 
+    inp = "y"
+    print("Configuring RealSense camera...")
+    pipeline = rs.pipeline()
+    config = rs.config()
+    config.enable_stream(rs.stream.color, 1920, 1080, rs.format.bgr8, 30)
+    print("Starting pipeline...")
+    profile = pipeline.start(config)
+    print("Pipeline started.")
+    # Allow camera to stabilize
+    time.sleep(2)
 
-    img_alum = cv2.imread(alum_img_path)
-    img_glass = cv2.imread(glass_img_path)
+    while True:
 
+        # Format: (x_start, y_start, width, height) - Relative to camera frame
+        INTERNAL_CROP_RECT_TOP = (900, 260, 380, 250) # User confirmed crop bounds
+        INTERNAL_CROP_RECT_BOT = (900, 540, 380, 250) # User confirmed crop bounds
 
-    # Format: (x_start, y_start, width, height) - Relative to camera frame
-    INTERNAL_CROP_RECT_TOP = (900, 260, 380, 250) # User confirmed crop bounds
-    INTERNAL_CROP_RECT_BOT = (900, 540, 380, 250) # User confirmed crop bounds
+        frames = pipeline.wait_for_frames()
+        color_frame = frames.get_color_frame()
 
-    frames = pipeline.wait_for_frames()
-    color_frame = frames.get_color_frame()
+        if not color_frame:
+            print("Warning: No color frame received.")
 
-    if not color_frame:
-        print("Warning: No color frame received.")
-
-    # Convert images to numpy arrays
-    frame_bgr = np.asanyarray(color_frame.get_data())
-
-
-    top = predict(pipeline, INTERNAL_CROP_RECT_TOP, 0.9, 0.5)
-    bot = predict(pipeline, INTERNAL_CROP_RECT_BOT, 0.9, 0.5)
-
-
-    # DEBUG CROP WINDOW WITH THIS DISPLAY:
-    cv2.rectangle(frame_bgr, (900, 260), (930 + 380, 260 + 250), (0, 255, 255), 2)
-    cv2.rectangle(frame_bgr, (900, 540), (930 + 380, 540 + 250), (0, 255, 255), 2)
-    cv2.imshow("display", frame_bgr)
+        # Convert images to numpy arrays
+        frame_bgr = np.asanyarray(color_frame.get_data())
 
 
-    key = cv2.waitKey(1) & 0xFF
-    if key == ord('q'):
-        print("Quit key pressed.")
-        break
-    #inp = input("Go?")
+        #top = predict(pipeline, INTERNAL_CROP_RECT_TOP, 0.9, 0.5)
+        #bot = predict(pipeline, INTERNAL_CROP_RECT_BOT, 0.9, 0.5)
+
+
+        # DEBUG CROP WINDOW WITH THIS DISPLAY:
+        cv2.rectangle(frame_bgr, (900, 260), (930 + 380, 260 + 250), (0, 255, 255), 2)
+        cv2.rectangle(frame_bgr, (900, 540), (930 + 380, 540 + 250), (0, 255, 255), 2)
+        cv2.imshow("display", frame_bgr)
+
+
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q'):
+            print("Quit key pressed.")
+            break
+        #inp = input("Go?")

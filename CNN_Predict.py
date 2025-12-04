@@ -111,7 +111,7 @@ def load_model(model_path, device):
     except Exception as e:
         print(f"Error loading model checkpoint: {e}")
         return None
-    
+
 
 def predict(input_tensor, model):
 
@@ -138,9 +138,21 @@ def predict(input_tensor, model):
 
     return prediction_text, text_color
 
+def predict_single_static(frame, model):
+    # Load input
+    frame_bgr = np.asanyarray(frame.get_data())
+    top_input_tensor = preprocess_live_frame(frame_bgr, "TOP")
+    top_input_tensor =  top_input_tensor.to(device)
+
+
+    # prediction pipeline
+    top_pred_text, _ = predict(top_input_tensor, model)
+
+    return top_pred_text
+
 
 def return_predictions(pipeline, bot_mod=".\\cnn_checkpoints\\cnn_best_model_epoch_50_acc_100.00.pth", top_mod=".\\cnn_checkpoints\\cnn_best_top_model_epoch_50_acc_100.00.pth"):
-    
+
     # Get Picture
     frames = pipeline.wait_for_frames()
     color_frame = frames.get_color_frame()
@@ -151,7 +163,7 @@ def return_predictions(pipeline, bot_mod=".\\cnn_checkpoints\\cnn_best_model_epo
     # Convert images to numpy arrays
     frame_bgr = np.asanyarray(color_frame.get_data())
 
-    
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # load model
@@ -247,7 +259,7 @@ if __name__ == "__main__":
 
             bot_pred_text, text_color = predict(bot_input_tensor, bot_model)
             top_pred_text, top_text_color = predict(top_input_tensor, top_model)
-            
+
 
 
             # --- Display ---
@@ -258,7 +270,7 @@ if __name__ == "__main__":
             cv2.rectangle(frame_bgr, (ROI_X, ROI_Y + ROI_OFFSET), (ROI_X + ROI_WIDTH, ROI_Y + ROI_OFFSET + ROI_HEIGHT), (0, 255, 255), 2) # Yellow ROI box
             cv2.putText(frame_bgr, bot_pred_text, (ROI_X + 5, ROI_Y + ROI_OFFSET + 25), # Position near top-left of ROI
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, text_color, 2)
-            
+
             # top pred
             cv2.rectangle(frame_bgr, (ROI_X, ROI_Y), (ROI_X + ROI_WIDTH, ROI_Y + ROI_HEIGHT), (0, 255, 255), 2) # Yellow ROI box
             cv2.putText(frame_bgr, top_pred_text, (ROI_X + 5, ROI_Y + 25), # Position near top-left of ROI
