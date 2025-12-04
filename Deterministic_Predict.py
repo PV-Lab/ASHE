@@ -138,7 +138,6 @@ def predict_single_static(img_alum, img_glass, crop_window, overlap_threhold, sl
     return overlap < overlap_threhold and slant < slant_threshold
 
 if __name__ == "__main__":
-
     inp = "y"
     print("Configuring RealSense camera...")
     pipeline = rs.pipeline()
