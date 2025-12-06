@@ -138,17 +138,16 @@ def predict(input_tensor, model):
 
     return prediction_text, text_color
 
-def predict_single_static(frame, model):
+def predict_single_static(frame, model, device):
     # Load input
-    frame_bgr = np.asanyarray(frame.get_data())
-    top_input_tensor = preprocess_live_frame(frame_bgr, "TOP")
-    top_input_tensor =  top_input_tensor.to(device)
+    bot_input_tensor = preprocess_live_frame(frame, "BOT")
+    bot_input_tensor =  bot_input_tensor.to(device)
 
 
     # prediction pipeline
-    top_pred_text, _ = predict(top_input_tensor, model)
+    bot_pred_text, _ = predict(bot_input_tensor, model)
 
-    return top_pred_text
+    return bot_pred_text
 
 
 def return_predictions(pipeline, bot_mod=".\\cnn_checkpoints\\cnn_best_model_epoch_50_acc_100.00.pth", top_mod=".\\cnn_checkpoints\\cnn_best_top_model_epoch_50_acc_100.00.pth"):

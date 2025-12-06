@@ -135,7 +135,7 @@ def predict_single_static(img_alum, img_glass, crop_window, overlap_threshold, s
     alum_rect = alum.find_corners(img_alum, crop_window)
     glass_rect = glass.find_corners(img_glass, crop_window)
     overlap, slant = compare_rectangles(alum_rect, glass_rect), slant_diff(alum_rect, glass_rect)
-    return overlap < overlap_threshold and slant < slant_threshold
+    return alum_rect, glass_rect, overlap < overlap_threshold and slant < slant_threshold
 
 if __name__ == "__main__":
 
