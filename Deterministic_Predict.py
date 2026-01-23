@@ -131,11 +131,15 @@ def predict(pipeline, crop_window, overlap_threshold, slant_threshold):
     return (overlap > overlap_threshold and slant > slant_threshold) or (len(alum_sampling) < 50 or len(glass_sampling) < 50)
 
 
+<<<<<<< HEAD
 def predict_single_static(img_alum, img_glass, crop_window, overlap_threhold, slant_threshold):
+=======
+def predict_single_static(img_alum, img_glass, crop_window, overlap_threshold, slant_threshold):
+>>>>>>> db8f50aa3a04070b49ee0571b753cbaa6e3bac8e
     alum_rect = alum.find_corners(img_alum, crop_window)
     glass_rect = glass.find_corners(img_glass, crop_window)
     overlap, slant = compare_rectangles(alum_rect, glass_rect), slant_diff(alum_rect, glass_rect)
-    return overlap < overlap_threhold and slant < slant_threshold
+    return alum_rect, glass_rect, overlap < overlap_threshold and slant < slant_threshold
 
 if __name__ == "__main__":
     inp = "y"
