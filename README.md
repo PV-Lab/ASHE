@@ -16,6 +16,7 @@ Self-driving laboratories (SDLs) are beginning to aid the chemistry and material
 | [geometric_model.py](./geometric.py)                | Python module with the geometric model.                            |
 | [standard_test.xlsx](./standard_test.xlsx)    | Results from the full 130 placement ASHE run. |
 | [test_images](./test_images) | Folder containing test images to demonstrate models.|
+| [gripper_design](./gripper_design) | Folder containing gripper CAD files.|
 
 
 ## Requirements
