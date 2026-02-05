@@ -1,6 +1,6 @@
 # Fused Geometric-Machine Leaning Model for Transparent Substrate Placement Detection
 
-![./workflow_diagram_R3.png](./workflow_diagram_R3.png)
+![./workflow_diagram_R3.png](./images/workflow_diagram_R3.png)
 
 **Authors:** Kelsey Fontenot kelfon@mit.edu and Anjali Gorti agorti@mit.edu
 
@@ -9,14 +9,15 @@ Self-driving laboratories (SDLs) are beginning to aid the chemistry and material
 
 ## Repository Structure
 
-| File/Folder               | Description                                                                                                                                    |
-|---------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| File/Folder               | Description    |
+|---------------------------|----------------|
 | [examples.ipynb](./examples.ipynb)         | Jupyter notebook demonstrating the pipeline and usage examples of the fused geometric-machine learning model for transparent substrate detection.|
-| [cnn_model.py](./cnn.py)                | Python module with the machine learning model.       |
-| [geometric_model.py](./geometric.py)                | Python module with the geometric model.                            |
-| [standard_test.xlsx](./standard_test.xlsx)    | Results from the full 130 placement ASHE run. |
-| [test_images](./test_images) | Folder containing test images to demonstrate models.|
-| [gripper_design](./gripper_design) | Folder containing gripper CAD files.|
+| [cnn_model.py](./cnn.py)  | Python module with the machine learning model. |
+| [geometric_model.py](./geometric.py) | Python module with the geometric model. |
+| [standard_test.xlsx](./standard_test.xlsx) | Results from the full 130 placement ASHE run. |
+| [images/test_images](./images/test_images) | Folder containing test images to demonstrate models. |
+| [gripper_design](./gripper_design) | Folder containing gripper CAD files. |
+| [cnn_checkpoints](./cnn_chekcpoints) | Folder containing path files for models. |
 
 
 ## Requirements
@@ -49,11 +50,11 @@ conda install python=3.11.11
 pip install -r requirements.txt
 ```
 
-## Quick Start
+<!-- ## Quick Start -->
 
 ## Model Architecture
 
-![./model_workflows_R1.png](./model_workflows_R1.png)
+![./model_workflows_R1.png](./images/model_workflows_R1.png)
 
 To detect whether the substrate has been successfully placed into the transporter, we propose a fused computer vision model approach. The first model uses the segmented geometry of the substrate compared to the target slot of the transporter to determine larger macro-scale errors in placement. The second model uses a deep learning convolutional neural network to determine smaller micro-scale errors in placement. The fused model approach enables robust and high-accuracy failure detection of transparent substrate placements. 
 
