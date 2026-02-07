@@ -3,7 +3,7 @@ import numpy as np
 from shapely.geometry import Polygon
 import pyrealsense2 as rs
 import os # Keep os for potential future use, though not strictly needed now
-import Image_Proccessing as im
+import image_proccessing as im
 
 
 # --- HYPER PARAMETERS ---

@@ -4,8 +4,8 @@ import cv2
 import time
 
 # --- Local Imports ---
-import CNN_Predict as model
-import Deterministic_Predict as det
+import cnn_predict as model
+import geometric_predict as det
 
 # -- hyper parameters --
 

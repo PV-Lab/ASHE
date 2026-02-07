@@ -12,9 +12,13 @@ Self-driving laboratories (SDLs) are beginning to aid the chemistry and material
 | File/Folder               | Description    |
 |---------------------------|----------------|
 | [examples.ipynb](./examples.ipynb)         | Jupyter notebook demonstrating the pipeline and usage examples of the fused geometric-machine learning model for transparent substrate detection.|
-| [cnn_model.py](./cnn.py)  | Python module with the machine learning model. |
-| [geometric_model.py](./geometric.py) | Python module with the geometric model. |
 | [standard_test.xlsx](./standard_test.xlsx) | Results from the full 130 placement ASHE run. |
+| [image_processing.py](./image_proccessing.py)  | Python module with image processing functions. |
+| [detect_alum.py](./detect_alum.py)  | Python module with aluminum detection functions. |
+| [detect_glass.py](./detect_glass.py)  | Python module with glass detection functions. |
+| [geometric_model.py](./geometric_model.py) | Python module containing the geometric model. |
+| [cnn_predict.py](./cnn_preduct.py)  | Python module containing the machine learning model. |
+| [main.py](./main.py)  | Main python module to run both geometric & machine learning models. |
 | [images/test_images](./images/test_images) | Folder containing test images to demonstrate models. |
 | [gripper_design](./gripper_design) | Folder containing gripper CAD files. |
 | [cnn_checkpoints](./cnn_chekcpoints) | Folder containing path files for models. |
@@ -32,6 +36,7 @@ To run the code in this repository, you will need the following dependencies:
 - torchaudio==2.5.1
 - torchvision==0.20.1
 - pillow==11.1.0
+- pandas==2.3.3
 
 ## Installation
 
