@@ -22,6 +22,7 @@ Self-driving laboratories (SDLs) are beginning to aid the chemistry and material
 | [images/test_images](./images/test_images) | Folder containing test images to demonstrate models. |
 | [gripper_design](./gripper_design) | Folder containing gripper CAD files. |
 | [cnn_checkpoints](./cnn_chekcpoints) | Folder containing path files for models. |
+| [training](./training) | Folder containing files for training the CNN model, including loading datasets and augmenting images. |
 
 
 ## Requirements
