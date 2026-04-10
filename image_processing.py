@@ -171,6 +171,9 @@ def is_considerable_shape(bounding_rectangle_corners, type_obj):
         height = side1_len
         width = side2_len
 
+        # print(f"height: {height}")
+        # print(f"width: {width}")
+
         is_valid = (
             (close_to(type_obj["height"], height) and close_to(type_obj["width"], width)) or
             (close_to(type_obj["height"], width) and close_to(type_obj["width"], height))

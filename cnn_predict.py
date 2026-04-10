@@ -143,11 +143,10 @@ def predict_single_static(frame, model, device):
     bot_input_tensor = preprocess_live_frame(frame, "BOT")
     bot_input_tensor =  bot_input_tensor.to(device)
 
-
     # prediction pipeline
-    bot_pred_text, _ = predict(bot_input_tensor, model)
+    bot_pred_text, text_color = predict(bot_input_tensor, model)
 
-    return bot_pred_text
+    return bot_pred_text, text_color
 
 
 def return_predictions(pipeline, bot_mod=".\\cnn_checkpoints\\cnn_best_model_epoch_50_acc_100.00.pth", top_mod=".\\cnn_checkpoints\\cnn_best_top_model_epoch_50_acc_100.00.pth"):

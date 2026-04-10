@@ -4,7 +4,7 @@ import time
 from shapely.geometry import Polygon
 import pyrealsense2 as rs
 import os # Keep os for potential future use, though not strictly needed now
-import image_proccessing as im
+import image_processing as im
 
 # --- HYPER PARAMETERS ---
 ALUMINUM_WIDTH = 325
@@ -22,7 +22,7 @@ def get_alum_edges(gray_im):
         return np.zeros((1,1), dtype=np.uint8)
 
 
-    edges = cv2.Canny(gray_im, 30, 300, apertureSize=3)
+    edges = cv2.Canny(gray_im, 1, 150, apertureSize=3)
 
     kernel_close = np.ones((3, 3), np.uint8)
     cleaned_edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel_close)
@@ -64,7 +64,7 @@ def find_corners(color_im, crop_window):
 
     if alum is not None:
 
-        epsilon = 0.01 * cv2.arcLength(alum, False)  # Adjust for desired smoothness
+        epsilon = 0.1 * cv2.arcLength(alum, False)  # Adjust for desired smoothness
         approx = cv2.approxPolyDP(alum, epsilon, True)
 
         # Apply Convex Hull to make sure it's convex
@@ -77,6 +77,8 @@ def find_corners(color_im, crop_window):
         x, y, w, h = cv2.boundingRect(hull)
 
         bounding_rectangle = [(x, y), (x, y+h), (x+w, y+h),(x+w, y)]
+        # print(bounding_rectangle)
+        # print(im.is_considerable_shape(bounding_rectangle, ALUMINUM))
 
         if im.is_considerable_shape(bounding_rectangle, ALUMINUM):
             return bounding_rectangle

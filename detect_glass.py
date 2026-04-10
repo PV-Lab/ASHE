@@ -3,11 +3,11 @@ import numpy as np
 from shapely.geometry import Polygon
 import pyrealsense2 as rs
 import os # Keep os for potential future use, though not strictly needed now
-import image_proccessing as im
+import image_processing as im
 
 
 # --- HYPER PARAMETERS ---
-GLASS_WIDTH = 330
+GLASS_WIDTH = 325
 GLASS_HEIGHT = 215
 GLASS_AREA = GLASS_WIDTH * GLASS_HEIGHT
 GLASS = {"width": GLASS_WIDTH, "height": GLASS_HEIGHT, "area": GLASS_AREA}
@@ -26,14 +26,16 @@ def get_glass_edges(color_filtered_im):
     # Canny morphology to isolate relevant edges
     edges = cv2.Canny(color_filtered_im, 50, 300, apertureSize=3)
 
-    kernel = np.ones((3, 3), np.uint8)
-    cleaned_edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
-    cleaned_edges = cv2.morphologyEx(cleaned_edges, cv2.MORPH_OPEN, kernel)
+    kernel_large = np.ones((3, 3), np.uint8)
+    cleaned_edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel_large)
+    cleaned_edges = cv2.morphologyEx(cleaned_edges, cv2.MORPH_OPEN, kernel_large)
 
-    kernel_erode = np.ones((1, 1), np.uint8)
-    cleaned_edges = cv2.erode(cleaned_edges, kernel_erode)
+    kernel_small = np.ones((1, 1), np.uint8)
+    cleaned_edges = cv2.erode(cleaned_edges, kernel_small)
 
-    return cleaned_edges
+    closed = cv2.morphologyEx(cleaned_edges, cv2.MORPH_CLOSE, kernel_small)
+
+    return closed
 
 def edge_points(edges):
     """ 
@@ -98,6 +100,9 @@ def find_corners(color_image, crop_window):
         # Apply Convex Hull to make sure it's convex
         hull = cv2.convexHull(polygon)
         points = im.bounding_rect(hull)
+
+        # print(f"bounding rect: {points}")
+        # print(im.is_considerable_shape(points, GLASS))
 
         if im.is_considerable_shape(points, GLASS):
             return points
