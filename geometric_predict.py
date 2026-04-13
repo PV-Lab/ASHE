@@ -167,11 +167,11 @@ def predict_single_static(img_alum, img_glass, crop_window, overlap_threshold, s
     alum_rect = repeated_sample_static(alum, img_alum, crop_window)
     # print(alum_rect)
     glass_rect = repeated_sample_static(glass, img_glass, crop_window)
-    # print(type(glass_rect))
+    # print(glass_rect)
     # overlap, slant = compare_rectangles(alum_rect, glass_rect), slant_diff(alum_rect, glass_rect)
     overlap, slant = averaged_sampling(alum_rect, glass_rect)
-    print(f"overlap: {overlap}")
-    print(f"slant: {slant}")
+    # print(f"overlap: {overlap}")
+    # print(f"slant: {slant}")
     return alum_rect, glass_rect, overlap > overlap_threshold and slant < slant_threshold
 
 if __name__ == "__main__":
