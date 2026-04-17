@@ -1,6 +1,6 @@
 # Fused Geometric-Machine Leaning Model for Transparent Substrate Placement Detection
 
-![./images/workflow_diagram_R4.png](./images/workflow_diagram_R3.png)
+![./images/workflow_diagram_R4.png](./images/workflow_diagram_R4.png)
 
 **Authors:** Kelsey Fontenot kelfon@mit.edu and Anjali Gorti agorti@mit.edu
 
